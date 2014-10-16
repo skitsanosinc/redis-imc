@@ -182,7 +182,7 @@ Request body:
 
 Returns new value of the item
 
-```json
+```
 {
 	"result": old_value +increment
 }
