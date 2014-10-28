@@ -93,11 +93,8 @@ Request body:
 #### Remove cache from a project
 
 ```
-DELETE /{project}/_caches
+DELETE /{project}/{cache}
 Content-Type: application/json
-
-BODY:
-{"name": "CACHE_NAME"}
 ```
 	
 #### Cache details. 
@@ -165,15 +162,9 @@ Returns true if item was created or false if creation failed
 #### Delete an item from cache
 
 ```
-DELETE /{project}/_caches
+DELETE /{project}/{cache}/{item}
 Content-Type: application/json
 ```
-
-Request body:
-
-```
-{"name": "ITEM_NAME"}
-``` 
 
 Returns true if item was deleted or false if deletion failed or item was not found
 
