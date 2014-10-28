@@ -40,15 +40,30 @@ Request body:
 #### Remove Project
 
 ```	
-DELETE /_projects
+DELETE /PROJECT_NAME
 Content-Type: application/json
 ```
 
-Request body:
+Returns _true_ if project was deleted or _false_ if failed to delete
+
+#### Project details. 
 
 ```
-{"name": "PROJECT_NAME"}
+GET /{project}/_details
+Content-Type: application/json
 ```
+Returns number of caches within a project
+
+```
+[
+	{
+		"caches": 123456
+	}
+]
+```
+
+Returns number of caches in selected project
+
 
 Caches
 ---
@@ -125,7 +140,7 @@ Returns
 #### Create an item in a cache
 
 ```
-PUT /{project}/{cache}
+PUT /{project}/{cache}/_items
 Content-Type: application/json
 ```
 
@@ -134,6 +149,7 @@ Request body:
 ```
 {
 	"name": "CACHE_NAME",
+	"value": "VALUE"|VALUE
 	"overwrite": true|false
 }
 ``` 
@@ -177,7 +193,7 @@ Content-Type: application/json
 Request body:
 
 ```
-{"value": 1}
+{"increment": 1}
 ``` 
 
 Returns new value of the item
