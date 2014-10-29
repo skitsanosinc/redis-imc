@@ -3,6 +3,37 @@ redis-imc
 
 In-Memory Cache REST API on Redis Database. 
 
+---
+
+Running redis-imc
+---
+
+This REST API functionality was implemented on top of [Node.js](http://nodejs.org) -- a platform built on Chrome's JavaScript runtime for easily building fast, scalable network applications. As datastore it uses [Redis](http://redis.io) -- an open source, BSD licensed, advanced key-value cache and store.
+
+Configuring Redis connection is, basically, the only thing to be done in order to run redis-imc, in _server.js_ you will find a line 27 where you can set your server address/hostname:
+
+```js
+var dbHost = 'localhost';
+```
+
+API designed to return you two types of server replies, for the result reply looks the following way:
+
+```
+{
+	"type": "result",
+	"result": ...
+}
+```
+
+Where faulty replies are having _type_ field set to _error_ and _result_ filed contains fault description:
+
+```
+{
+	"type": "error",
+	"result": ...
+}
+```
+
 
 Projects
 ---
