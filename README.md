@@ -17,11 +17,15 @@ Content-Type: application/json
 Returns array of projects
 
 ```
-[
-	"project1",
-	"project2",
-	...
-]
+{
+	"type": "result",
+	"result":
+		[
+			"project1",
+			"project2",
+			...
+		]
+}
 ```
 
 #### Add Project
@@ -46,20 +50,30 @@ Content-Type: application/json
 
 Returns _true_ if project was deleted or _false_ if failed to delete
 
+```
+{
+	"type": "result",
+	"result": true|false
+}
+```
+
 #### Project details. 
 
 ```
 GET /{project}/_details
 Content-Type: application/json
 ```
+
 Returns number of caches within a project
 
 ```
-[
-	{
-		"caches": 123456
-	}
-]
+{
+	"type": "result",
+	"result":
+		{
+			"caches": 123456
+		}
+}
 ```
 
 Returns number of caches in selected project
@@ -68,7 +82,6 @@ Returns number of caches in selected project
 Caches
 ---
 
-http://hostname/{_project_}/_caches
 
 #### List caches within a project
 
@@ -96,6 +109,15 @@ Request body:
 DELETE /{project}/{cache}
 Content-Type: application/json
 ```
+
+Returns _true_ if cache was deleted or _false_ if failed to delete
+
+```
+{
+	"type": "result",
+	"result": true|false
+}
+```
 	
 #### Cache details. 
 
@@ -103,21 +125,23 @@ Content-Type: application/json
 GET /{project}/{cache}/_details
 Content-Type: application/json
 ```
-Returns
+
+Returns number of items registered within a cache
 
 ```
-[
-	{
-		"cache_name": {"size": 123456}
-	}
-]
+{
+	"type": "result",
+	"result":
+		{
+			"items": number_of_items
+		}
+}
 ```
 	
 
 Items
 ---
 
-http://hostname/{_project_}/{_cache_}/_items
 
 #### Get an item from a cache
 
@@ -126,11 +150,12 @@ GET /{project}/{cache}/{item}
 Content-Type: application/json
 ```
 
-Returns
+Returns content of the requested item
 
 ```
 {
-	"data": "value",
+	"type": "result",
+	"result": "value"
 }
 ```
 
@@ -140,6 +165,7 @@ Returns
 PUT /{project}/{cache}/_items
 Content-Type: application/json
 ```
+You need to pass JSON object with _name_ of the item, its _value_ and specify _overwrite_ to set a new value to the existing item, so it will overwrite it, otherwise, if _overwrite_ set to _false_ or not present, it will fire an error that item already exists.
 
 Request body:
 
