@@ -1,10 +1,6 @@
 /**
- * Created by skitsanos on 18/10/2014.
- */
-
-/**
- * NetPass Application Server
- * Created by skitsanos on 11/03/2014.
+ * redis-imc REST API Server
+ * Created by skitsanos on 11/10/2014.
  */
 
 String.prototype.replaceAll = function (f, r)
@@ -17,83 +13,10 @@ String.prototype.startsWith = function (str)
 	return (this.indexOf(str) === 0);
 };
 
-String.prototype.mid = function (start, len)
-{
-	if (start < 0 || len < 0) return "";
-	var iEnd, iLen = String(this).length;
-	if (start + len > iLen)
-	{
-		iEnd = iLen;
-	}
-	else
-	{
-		iEnd = start + len;
-	}
-	return String(this).substring(start, iEnd);
-};
-
-Array.prototype.exists = function (x)
-{
-	for (var i = 0; i < this.length; i++)
-	{
-		if (this[i] == x) return true;
-	}
-	return false;
-};
-
-Array.prototype.even = function (val)
-{
-	var result = [];
-	for (var i = 0; i < this.length; i++)
-	{
-		if (0 == this[i] % 2)
-			result.push(this[i]);
-	}
-
-	return result;
-};
-
-Array.prototype.odd = function ()
-{
-	var result = [];
-	for (var i = 0; i < this.length; i++)
-	{
-		if (0 != this[i] % 2)
-			result.push(this[i]);
-	}
-
-	return result;
-};
-
-Array.prototype.evenIndex = function ()
-{
-	var result = [];
-	for (var i = 0; i < this.length; i++)
-	{
-		if (0 != i % 2)
-			result.push(this[i]);
-	}
-
-	return result;
-};
-
-Array.prototype.oddIndex = function ()
-{
-	var result = [];
-	for (var i = 0; i < this.length; i++)
-	{
-		if (0 == i % 2)
-			result.push(this[i]);
-	}
-
-	return result;
-};
-
 var fs = require('fs');
 var http = require('http');
 var url = require('url');
 var redis = require('redis');
-var nodemailer = require('nodemailer');
 var Hashes = require('jshashes');
 
 //routes
@@ -101,7 +24,6 @@ var _projectsRoute = require('routes/_projects.js');
 var _cachesRoute = require('routes/_caches.js');
 var _itemsRoute = require('routes/_items.js');
 
-//var dbHost = 'pdfapi.skitsanos.com';
 var dbHost = 'localhost';
 var dbServerIsOnline = true;
 var pulseClient = redis.createClient(6379, dbHost);
@@ -109,7 +31,6 @@ var pulseClient = redis.createClient(6379, dbHost);
 pulseClient.on('error', function (err)
 {
 	dbServerIsOnline = false;
-	//console.log(err);
 });
 
 pulseClient.on('ready', function (err)
@@ -229,7 +150,7 @@ http.createServer(function (request, response)
 				{
 					requestBody += chunk;
 					//kill all requests bigger than 1Kb
-					if (requestBody.length > 256)
+					if (requestBody.length > 1024)
 					{
 						// FLOOD ATTACK OR FAULTY CLIENT, NUKE REQUEST
 						request.connection.destroy();
@@ -321,5 +242,3 @@ http.createServer(function (request, response)
 	}
 
 }).listen(process.env.PORT || process.env.VMC_APP_PORT || 1338, null);
-
-//console.log('NetPass is up and running');
