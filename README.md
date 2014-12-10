@@ -202,7 +202,7 @@ Request body:
 
 ```
 {
-	"name": "CACHE_NAME",
+	"name": "ITEM_NAME",
 	"value": "VALUE"|VALUE
 	"overwrite": true|false
 }
